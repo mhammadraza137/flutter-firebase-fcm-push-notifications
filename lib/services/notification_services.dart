@@ -67,9 +67,16 @@ class NotificationServices {
               playSound: true);
       NotificationDetails notificationDetails = NotificationDetails(
           android: androidNotificationDetails,
-          iOS: const DarwinNotificationDetails());
+          iOS: const DarwinNotificationDetails(
+              presentList: true,
+              presentBanner: true,
+              presentBadge: true,
+              presentAlert: true,
+              presentSound: true
+          ));
       return notificationDetails;
     }
+
     // This will be notification icon (Android->app->src->main->res->mipmap->ic_launcher)
     AndroidInitializationSettings androidInitializationSettings =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -121,6 +128,14 @@ class NotificationServices {
         );
       }
     });
+  }
+  //...................set settings in IOS to show foreground notification when app is in foreground....................//
+  Future<void> showForegroundNotificationInIOS() async{
+    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true
+    );
   }
 
   //............................notification handler when tapped................................................//
